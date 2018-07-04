@@ -75,6 +75,7 @@ handle_info(timeout, State) ->
 
 terminate(_Reason, _State) ->
     sc_store:delete(self()),
+    sc_event:timeout(self()),
     ok.
 
 code_change(_Old, State, _New) ->

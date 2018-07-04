@@ -6,7 +6,8 @@
          lookup/1,
          insert/2,
          replace/2,
-         delete/1]).
+         delete/1,
+         timeout/1]).
 
 -define(SERVER, ?MODULE).
 
@@ -30,3 +31,6 @@ replace(Key, Value) ->
 
 delete(Key) ->
     gen_event:notify(?SERVER, {delete, Key}).
+
+timeout(Pid) ->
+    gen_event:notify(?SERVER, {timeout, Pid}).

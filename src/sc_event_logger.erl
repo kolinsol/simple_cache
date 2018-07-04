@@ -36,6 +36,9 @@ handle_event({delete, Key}, State) ->
     {ok, State};
 handle_event({replace, {Key, Value}}, State) ->
     error_logger:info_msg("replace(~w, ~w)~n", [Key, Value]),
+    {ok, State};
+handle_event({timeout, Pid}, State) ->
+    error_logger:info_msg("timeout(~w)", [Pid]),
     {ok, State}.
 
 terminate(_Reason, _State) -> ok.
