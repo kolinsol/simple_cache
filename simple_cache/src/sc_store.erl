@@ -10,7 +10,6 @@
 -record(key_to_pid, {key, pid}).
 
 init() ->
-    mnesia:start(),
     mnesia:create_table(key_to_pid,
                         [{index, [pid]},
                          {attributes, record_info(fields, key_to_pid)}]).

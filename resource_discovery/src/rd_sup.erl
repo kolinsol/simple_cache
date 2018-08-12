@@ -12,8 +12,8 @@ start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
 init([]) ->
-     ResourceDiscoveryServer = {rd_event, {rd_event, start_link, []},
-                                permanent, 2000, worker, [rd_event]},
+     ResourceDiscoveryServer = {rd_server, {rd_server, start_link, []},
+                                permanent, 2000, worker, [rd_server]},
      Children = [ResourceDiscoveryServer],
      RestartStrategy = {one_for_one, 4, 3600},
      {ok, {RestartStrategy, Children}}.
