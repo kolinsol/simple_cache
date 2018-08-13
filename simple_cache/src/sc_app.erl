@@ -8,8 +8,8 @@
 
 start(_StartType, _StartArgs) ->
     ok = ensure_contact(),
-    rd_server:add_local_resource(simple_cache, node()),
-    rd_server:add_target_resource_type(simple_cache),
+    rd_server:add_local_resource(simple_cache),
+    rd_server:add_target_resource(simple_cache),
     rd_server:trade_resources(),
     timer:sleep(?WAIT_FOR_RESOURCES),
     case sc_sup:start_link() of
