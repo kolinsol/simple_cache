@@ -14,7 +14,8 @@ start(_StartType, _StartArgs) ->
     {ok, LSock} = gen_tcp:listen(Port, [{active, true}]),
     case ti_sup:start_link(LSock) of
         {ok, Pid} ->
-            ti_sup:start_child(),
+            ti_server_sup:start_child(),
+            ti_event_logger:add_handler(),
             {ok, Pid};
         Other ->
             {error, Other}

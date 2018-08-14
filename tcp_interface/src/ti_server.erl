@@ -22,13 +22,14 @@ handle_cast(stop, State) ->
     {stop, normal, State}.
 
 handle_info({tcp, Socket, RawData}, State) ->
+    ti_event:data_received(RawData),
     NewState = handle_data(Socket, RawData, State),
     {noreply, NewState};
 handle_info({tcp_closed, _Socket}, State) ->
     {stop, normal, State};
 handle_info(timeout, #state{lsock = LSock} = State) ->
     {ok, _Sock} = gen_tcp:accept(LSock),
-    ti_sup:start_child(),
+    ti_server_sup:start_child(),
     {noreply, State}.
 
 terminate(_Reason, _State) ->
@@ -38,5 +39,6 @@ code_change(_OldVsn, State, _Extra) ->
     {ok, State}.
 
 handle_data(Socket, RawData, State) ->
+    ti_event:data_sent(RawData),
     gen_tcp:send(Socket, RawData),
     State.

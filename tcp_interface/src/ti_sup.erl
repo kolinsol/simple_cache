@@ -2,7 +2,7 @@
 
 -behaviour(supervisor).
 
--export([start_link/1, start_child/0]).
+-export([start_link/1]).
 
 -export([init/1]).
 
@@ -11,12 +11,12 @@
 start_link(LSock) ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, [LSock]).
 
-start_child() ->
-    supervisor:start_child(?SERVER, []).
-
 init([LSock]) ->
-    Server = {ti_server, {ti_server, start_link, [LSock]},
-              temporary, brutal_kill, worker, [ti_server]},
-    Children = [Server],
-    RestartStrategy = {simple_one_for_one, 0, 1},
-    {ok, {RestartStrategy, Children}}.
+     ServerSup = {ti_server_sup, {ti_server_sup, start_link, [LSock]},
+                   permanent, 2000, supervisor, [ti_server]},
+     EventManager = {ti_event, {ti_event, start_link, []},
+                     permanent, 2000, worker, [ti_event]},
+     Children = [ServerSup, EventManager],
+     RestartStrategy = {one_for_one, 4, 3600},
+     {ok, {RestartStrategy, Children}}.
+
