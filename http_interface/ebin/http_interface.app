@@ -3,7 +3,7 @@
   {vsn, "0.1.0"},
   {modules, [hi_app,
              hi_sup,
-             hi_server, 
+             hi_server
             ]},
   {registered, [hi_sup]},
   {applications, [kernel, stdlib]},

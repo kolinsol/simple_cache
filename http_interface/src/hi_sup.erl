@@ -2,7 +2,7 @@
 
 -behaviour(supervisor).
 
--export([start_link/1]).
+-export([start_link/1, start_child/0]).
 
 -export([init/1]).
 
@@ -10,6 +10,9 @@
 
 start_link(Port) ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, [Port]).
+
+start_child() ->
+    supervisor:start_child(?SERVER, []).
 
 init([Port]) ->
      HttpServer = {hi_server, {hi_server, start_link, [Port]},

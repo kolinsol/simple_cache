@@ -5,5 +5,6 @@
              gws_connection_sup,
              gws_server, 
             ]},
+  {registered, []},
   {applications, [kernel, stdlib]}
  ]}.
