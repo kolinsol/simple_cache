@@ -13,7 +13,7 @@ start_link(LSock) ->
 
 init([LSock]) ->
      ServerSup = {ti_server_sup, {ti_server_sup, start_link, [LSock]},
-                   permanent, 2000, supervisor, [ti_server]},
+                   permanent, 2000, supervisor, [ti_server_sup]},
      EventManager = {ti_event, {ti_event, start_link, []},
                      permanent, 2000, worker, [ti_event]},
      Children = [ServerSup, EventManager],
