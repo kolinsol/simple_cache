@@ -11,7 +11,6 @@ start(_StartType, _StartArgs) ->
                {ok, P} -> P;
                undefined -> ?DEFAULT_PORT
            end,
-
     case hi_sup:start_link(Port) of
         {ok, Pid} ->
             {ok, Pid};
